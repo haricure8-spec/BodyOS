@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>身体OS診断</title>
+<style>
+body{margin:0;background:#f4eadb;font-family:-apple-system,BlinkMacSystemFont,"Yu Gothic",sans-serif;color:#1f2a24}
+.app{max-width:760px;margin:0 auto;padding:18px}
+.hero{background:linear-gradient(135deg,#154266,#125216);color:white;border-radius:22px;padding:24px}
+.panel,.result,.card{background:#fffaf2;border:1px solid #d8c9b5;border-radius:18px;padding:18px;margin-top:14px}
+input,select,button,textarea{width:100%;box-sizing:border-box;font-size:19px;padding:13px;border-radius:12px;border:1px solid #aaa;margin-top:6px;background:white}
+label{font-weight:bold;display:block;margin-top:14px}
+.date{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px}
+button{background:#154266;color:white;border:none;font-weight:bold;margin-top:20px}
+.hidden{display:none}.card h3{color:#125216;font-size:24px;margin:4px 0 8px}.small{font-size:13px;color:#766b5e}
+table{width:100%;border-collapse:collapse;background:white;margin-top:10px}th,td{border:1px solid #d8c9b5;padding:10px;text-align:center}th{background:#efe3d1}
+.teacher{background:#f7f0e5;border:1px dashed #8c7a62}details summary{font-weight:bold;font-size:20px;cursor:pointer;color:#154266}
+.checks label{background:white;border:1px solid #ddd;border-radius:10px;padding:10px;margin-top:8px}.checks input{width:auto;margin-right:8px}textarea{min-height:90px}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="hero"><h1>身体OS診断</h1><p>命式から「本来」を観て、UG6で「今」を観る。</p></div>
+
+<div class="panel">
+<h2>身体設計図を出す</h2>
+<label>お名前</label><input id="name" type="text" placeholder="例：山田 太郎">
+<label>生年月日</label>
+<div class="date"><input id="year" type="number" placeholder="年 例:1968"><input id="month" type="number" placeholder="月"><input id="day" type="number" placeholder="日"></div>
+<label>出生時間</label>
+<select id="hour">
+<option value="">不明</option><option value="0">子の刻 23:00〜0:59</option><option value="2">丑の刻 1:00〜2:59</option><option value="4">寅の刻 3:00〜4:59</option><option value="6">卯の刻 5:00〜6:59</option><option value="8">辰の刻 7:00〜8:59</option><option value="10">巳の刻 9:00〜10:59</option><option value="12">午の刻 11:00〜12:59</option><option value="14">未の刻 13:00〜14:59</option><option value="16">申の刻 15:00〜16:59</option><option value="18">酉の刻 17:00〜18:59</option><option value="20">戌の刻 19:00〜20:59</option><option value="22">亥の刻 21:00〜22:59</option>
+</select>
+<button id="btn">鑑定する</button>
+</div>
+
+<div id="result" class="result hidden">
+<p class="small">患者さん用表示</p><h2 id="title"></h2><p id="meta" class="small"></p>
+<div class="card"><p class="small">① 本来の軸</p><h3 id="core"></h3><p id="coreText"></p></div>
+<div class="card"><p class="small">② 力が出る条件</p><h3 id="power"></h3><p>この条件が整うと、本来の身体の使い方に戻りやすくなります。</p></div>
+<div class="card"><p class="small">③ 崩れやすいクセ</p><h3 id="risk"></h3><p id="riskText"></p></div>
+
+<div class="card">
+<p class="small">UG6 現在地チェック</p>
+<div class="checks">
+<label><input type="checkbox">①止まれない</label><label><input type="checkbox">②上に浮く</label><label><input type="checkbox">③外に漏れる</label><label><input type="checkbox">④時間が合わない</label><label><input type="checkbox">⑤頭に集まる</label><label><input type="checkbox">⑥受け取れない</label>
+</div>
+<textarea placeholder="今日変わったこと"></textarea>
+</div>
+
+<div class="card teacher">
+<details>
+<summary>▼ 先生用命式を表示</summary>
+<p class="small">β版の簡易命式です。正式運用では節入り計算・蔵干・通変星を追加します。</p>
+<table>
+<tr><th></th><th>天干</th><th>地支</th><th>五行</th></tr>
+<tr><th>年柱</th><td id="yearStem"></td><td id="yearBranch"></td><td id="yearElement"></td></tr>
+<tr><th>月柱</th><td id="monthStem"></td><td id="monthBranch"></td><td id="monthElement"></td></tr>
+<tr><th>日柱</th><td id="dayStem"></td><td id="dayBranch"></td><td id="dayElement"></td></tr>
+<tr><th>時柱</th><td id="hourStem"></td><td id="hourBranch"></td><td id="hourElement"></td></tr>
+</table>
+<div class="card"><p class="small">五行集計</p><h3 id="elements"></h3><p id="logic" class="small"></p></div>
+</details>
+</div>
+</div>
+</div>
+
+<script>
+const stems=["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+const branches=["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+const stemEl={"甲":"木","乙":"木","丙":"火","丁":"火","戊":"土","己":"土","庚":"金","辛":"金","壬":"水","癸":"水"};
+const branchEl={"寅":"木","卯":"木","巳":"火","午":"火","辰":"土","戌":"土","丑":"土","未":"土","申":"金","酉":"金","亥":"水","子":"水"};
+const rules={
+"甲":{core:"🌳 根を張る軸",coreText:"本来は足元から力を使い、まっすぐ伸びるように動けるタイプです。",power:["足裏","伸びる方向"],risk:"①止まれない",riskText:"頑張りすぎると止まれず、前へ前へと力が出やすくなります。"},
+"乙":{core:"🌿 しなやか軸",coreText:"本来は力で押すより、流れに合わせてしなやかに整うタイプです。",power:["呼吸","余白"],risk:"③外に漏れる",riskText:"気を遣いすぎると輪郭がぼやけ、力が外へ漏れやすくなります。"},
+"丙":{core:"☀️ 開く軸",coreText:"本来は明るく外へ開くことで、身体の巡りが出やすいタイプです。",power:["胸の開き","視線"],risk:"②上に浮く",riskText:"熱が上がると肩・首・頭に力が集まりやすくなります。"},
+"丁":{core:"🔥 灯す軸",coreText:"本来は小さな集中と呼吸で、内側から力が灯るタイプです。",power:["深い呼吸","静かな集中"],risk:"⑤頭に集まる",riskText:"考えが増えると頭に集まり、身体の下が使いにくくなります。"},
+"戊":{core:"⛰ 支える軸",coreText:"本来は中心が決まると、どっしり支えられるタイプです。",power:["骨盤","腹の安定"],risk:"④時間が合わない",riskText:"抱え込みすぎると、動き出しや切り替えのタイミングがズレやすくなります。"},
+"己":{core:"🌾 育てる軸",coreText:"本来は整った環境の中で、じわじわ力を育てるタイプです。",power:["安心感","一定のリズム"],risk:"⑥受け取れない",riskText:"疲れると入力が入りにくく、反応が遅れやすくなります。"},
+"庚":{core:"⚙️ 整える軸",coreText:"本来は余分なものを削ぎ、動きをはっきりさせると力が出るタイプです。",power:["姿勢の線","首の抜け"],risk:"③外に漏れる",riskText:"緊張が強いと外側だけ固まり、内側の力が使いにくくなります。"},
+"辛":{core:"💎 磨く軸",coreText:"本来は繊細な感覚で、細かなズレに気づけるタイプです。",power:["静けさ","細かな感覚"],risk:"⑤頭に集まる",riskText:"感覚が過敏になると頭で処理しすぎ、身体の反応が遅れやすくなります。"},
+"壬":{core:"🌊 流れる軸",coreText:"本来は止めずに流れを作ることで、身体が大きく動けるタイプです。",power:["歩行","流れ"],risk:"④時間が合わない",riskText:"流れが乱れると、動きの拍子や生活リズムがズレやすくなります。"},
+"癸":{core:"💧 深める軸",coreText:"本来は静かに深く入り、内側から回復していくタイプです。",power:["休息","下半身の感覚"],risk:"⑥受け取れない",riskText:"消耗すると反応が薄くなり、身体からのサインを受け取りにくくなります。"}
+};
+const branchPower={"子":["休息","下半身の感覚"],"丑":["骨盤","安心感"],"寅":["足裏","伸びる方向"],"卯":["呼吸","余白"],"辰":["腹の安定","切り替え"],"巳":["胸の開き","温度"],"午":["視線","発散"],"未":["安心感","一定のリズム"],"申":["姿勢の線","首の抜け"],"酉":["静けさ","細かな感覚"],"戌":["骨盤","支える力"],"亥":["歩行","流れ"]};
+function mod(n,m){return ((n%m)+m)%m}
+function days(y,m,d){y-=m<=2?1:0;const era=Math.floor(y/400),yoe=y-era*400,doy=Math.floor((153*(m+(m>2?-3:9))+2)/5)+d-1,doe=yoe*365+Math.floor(yoe/4)-Math.floor(yoe/100)+doy;return era*146097+doe-719468}
+function yearPillar(y){const idx=mod(y-1984,60);return {stem:stems[idx%10],branch:branches[idx%12]}}
+function monthPillar(y,m){const branchIndex=mod(m,12),ys=stems.indexOf(yearPillar(y).stem),first=mod((ys%5)*2+2,10);return {stem:stems[mod(first+(m-2),10)],branch:branches[branchIndex]}}
+function dayPillar(y,m,d){const diff=days(y,m,d)-days(1900,1,31);return {stem:stems[mod(diff,10)],branch:branches[mod(diff,12)]}}
+function hourPillar(dayStem,h){if(h==="")return {stem:"不明",branch:"不明"};const branchIndex=Number(h)===0?0:Math.floor((Number(h)+1)/2)%12,ds=stems.indexOf(dayStem),first=mod((ds%5)*2,10);return {stem:stems[mod(first+branchIndex,10)],branch:branches[branchIndex]}}
+function eText(p){return (stemEl[p.stem]||"-")+" / "+(branchEl[p.branch]||"-")}
+function add(count,p){if(stemEl[p.stem])count[stemEl[p.stem]]++;if(branchEl[p.branch])count[branchEl[p.branch]]++}
+function t(id,v){document.getElementById(id).textContent=v}
+function diagnose(){
+const name=document.getElementById("name").value.trim()||"ゲスト",y=Number(year.value),m=Number(month.value),d=Number(day.value),h=hour.value;
+if(!y||!m||!d){alert("年・月・日を数字で入れてください");return}
+if(y<1900||y>2026||m<1||m>12||d<1||d>31||d>new Date(y,m,0).getDate()){alert("生年月日を確認してください");return}
+const yp=yearPillar(y),mp=monthPillar(y,m),dp=dayPillar(y,m,d),hp=hourPillar(dp.stem,h),r=rules[dp.stem],powers=[];
+[...r.power,...(branchPower[mp.branch]||[])].forEach(x=>{if(!powers.includes(x)&&powers.length<2)powers.push(x)});
+t("title",name+" さん");t("meta",`${y}年${m}月${d}日 ｜ 日干:${dp.stem} ｜ 日支:${dp.branch}`);
+t("core",r.core);t("coreText",r.coreText);t("power","✅ "+powers.join("　✅ "));t("risk",r.risk);t("riskText",r.riskText+"\n\n※実際の現在地はUG6テストで確認します。");
+t("yearStem",yp.stem);t("yearBranch",yp.branch);t("yearElement",eText(yp));t("monthStem",mp.stem);t("monthBranch",mp.branch);t("monthElement",eText(mp));t("dayStem",dp.stem);t("dayBranch",dp.branch);t("dayElement",eText(dp));t("hourStem",hp.stem);t("hourBranch",hp.branch);t("hourElement",eText(hp));
+const counts={"木":0,"火":0,"土":0,"金":0,"水":0};[yp,mp,dp,hp].forEach(p=>add(counts,p));
+t("elements",`木${counts["木"]}・火${counts["火"]}・土${counts["土"]}・金${counts["金"]}・水${counts["水"]}`);
+t("logic",`日干${dp.stem}を本来の軸として身体設計図へ変換。月支${mp.branch}で力が出る条件を補正。五行の偏りはUG6現在地チェックと合わせて判断します。`);
+result.classList.remove("hidden");result.scrollIntoView({behavior:"smooth"});
+}
+btn.addEventListener("click",diagnose);
+</script>
+</body>
+</html>
