@@ -1,30 +1,314 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UG LAB 身体OS｜BodyOS 1.0 alpha</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UG LAB 身体OS</title>
 <style>
-:root{--navy:#123d63;--green:#125216;--bg:#f4eadb;--paper:#fffaf2;--card:#fff;--line:#d8c9b5;--muted:#786d61;--gold:#b58b2b;--deep:#10261b}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#fff8ec 0,#f4eadb 50%,#eadbc5 100%);color:var(--deep);font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif}.app{max-width:920px;margin:0 auto;padding:18px}.hero{background:linear-gradient(135deg,var(--navy),var(--green));color:#fff;border-radius:28px;padding:28px 22px;box-shadow:0 14px 34px #0002}.badge{display:inline-block;border:1px solid #ffffffb8;border-radius:999px;padding:5px 12px;font-size:13px;margin-bottom:10px}h1{font-size:36px;line-height:1.14;margin:0 0 10px}.hero p{line-height:1.75;margin:0}.panel,.section,.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;margin-top:16px;box-shadow:0 8px 22px #0001}.section-title{display:flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--navy)}.step{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--navy);color:#fff;border-radius:50%;font-weight:900;font-size:15px}label{display:block;font-weight:800;margin-top:14px}input,select,button,textarea{width:100%;font-size:19px;padding:14px;border-radius:14px;border:1px solid #b8ab9b;background:#fff;margin-top:7px}button{background:var(--navy);color:#fff;border:none;font-weight:900;cursor:pointer;letter-spacing:.04em}.secondary{background:var(--green)}.light{background:#efe3d1;color:var(--deep);border:1px solid var(--line)}.date{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px}.hidden{display:none!important}.small{font-size:13px;color:var(--muted);line-height:1.65}.resultHead{background:linear-gradient(135deg,#fff,#f7eddc);border:1px solid var(--line);border-radius:22px;padding:18px;margin-top:16px}.resultHead h2{margin:0;color:var(--green);font-size:28px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:var(--card);box-shadow:none}.card-label{font-size:13px;color:var(--muted);font-weight:800;margin:0 0 5px}.card h3{font-size:25px;color:var(--green);margin:0 0 8px;white-space:pre-wrap}.card p{line-height:1.78;white-space:pre-wrap}.checkGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ug6Card{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;cursor:pointer}.ug6Card input{width:auto;margin:4px 0 0}.ug6Main{font-weight:900;font-size:18px}.ug6Sub{font-size:13px;color:var(--muted);line-height:1.5;margin-top:2px}.scorePanel{background:linear-gradient(180deg,#fff,#f5ecdd);border:1px solid var(--line);border-radius:24px;padding:22px;text-align:center}.scoreTitle{font-size:15px;color:var(--muted);font-weight:900}.score{font-size:68px;line-height:1;color:var(--green);font-weight:1000;margin:10px 0}.barWrap{height:24px;border-radius:999px;overflow:hidden;background:#e6ded1;border:1px solid #d2c3ae;margin:14px 0}.bar{height:100%;width:0%;background:linear-gradient(90deg,var(--green),#87a330,var(--gold));transition:.5s}.osLine{font-size:18px;font-weight:900}.map{height:210px;border-radius:22px;background:linear-gradient(180deg,#fff 0,#f9f1e5 100%);border:1px solid var(--line);position:relative;overflow:hidden}.mapLabel{position:absolute;left:0;right:0;text-align:center;font-weight:900;color:var(--muted)}.mapLabel.home{top:16px}.mapLabel.now{bottom:16px}.dot{position:absolute;width:30px;height:30px;border-radius:50%;transform:translate(-50%,-50%)}.dot.home{background:var(--green);left:50%;top:32%}.dot.now{background:var(--navy);left:50%;top:72%;transition:.5s}.dash{position:absolute;left:50%;top:39%;height:74px;border-left:3px dashed #b7aa9a}.rank{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:8px}.stars{color:var(--gold);font-weight:1000;white-space:nowrap}.teacher{background:#f7f0e5;border:1px dashed #8c7a62}details summary{font-weight:900;font-size:20px;color:var(--navy);cursor:pointer}table{width:100%;border-collapse:collapse;background:#fff;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;text-align:center}th{background:#efe3d1}.memo{min-height:90px}.footerNote{text-align:center;margin:20px 0 8px;color:var(--muted);font-size:13px}@media(max-width:720px){.grid2,.checkGrid{grid-template-columns:1fr}.date{grid-template-columns:1.2fr 1fr 1fr}}@media print{body{background:#fff}.hero,.panel,.noPrint,.footerNote{display:none!important}.app{max-width:none;padding:0}.section,.card,.resultHead{box-shadow:none;background:#fff}.teacher{display:none}}
+:root{--navy:#154266;--green:#125216;--bg:#f4eadb;--paper:#fffaf2;--line:#d8c9b5;--ink:#1f2a24}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;color:var(--ink)}
+.app{max-width:860px;margin:0 auto;padding:18px}
+.hero{background:linear-gradient(135deg,var(--navy),var(--green));color:white;border-radius:26px;padding:26px;margin-bottom:16px}
+.hero h1{font-size:38px;margin:0 0 12px}
+.hero p{line-height:1.8;margin:0}
+.panel,.card,.section{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;margin-top:16px}
+h2{color:var(--navy);font-size:28px}
+label{display:block;font-weight:bold;margin-top:14px}
+input,select,button,textarea{width:100%;font-size:20px;padding:14px;border-radius:14px;border:1px solid #aaa;margin-top:7px;background:white}
+button{background:var(--navy);color:white;border:none;font-weight:bold;cursor:pointer}
+button.green{background:var(--green)}
+.date{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px}
+.hidden{display:none}
+.small{font-size:14px;color:#746a5e;line-height:1.7}
+.card h3{font-size:26px;color:var(--green);margin:0 0 8px;white-space:pre-wrap}
+.card p{line-height:1.8;white-space:pre-wrap}
+.check label{background:white;border:1px solid var(--line);border-radius:14px;padding:12px}
+.check input{width:auto;margin-right:8px}
+.scoreBox{text-align:center;background:white;border:1px solid var(--line);border-radius:22px;padding:22px}
+.score{font-size:70px;color:var(--green);font-weight:900}
+.barWrap{height:24px;background:#ddd;border-radius:999px;overflow:hidden;margin:14px 0}
+.bar{height:100%;width:0%;background:linear-gradient(90deg,var(--green),#b58b2b)}
+textarea{min-height:90px}
+details summary{font-weight:bold;font-size:21px;color:var(--navy);cursor:pointer}
+table{width:100%;border-collapse:collapse;background:white;margin-top:10px}
+th,td{border:1px solid var(--line);padding:10px;text-align:center}
+th{background:#efe3d1}
+@media print{.hero,.panel,.noPrint{display:none}.app{padding:0}.section,.card{box-shadow:none;background:white}}
 </style>
 </head>
-<body><div class="app">
-<header class="hero"><div class="badge">UG LAB / BodyOS 1.0 alpha</div><h1>身体OS診断</h1><p>設計図は変えられない。現在地は変えられる。<br>身体が答え。本来へ戻るための現在地を観る。</p></header>
-<section class="panel noPrint"><h2 class="section-title"><span class="step">1</span>身体設計図を呼び出す</h2><label>お名前</label><input id="name" type="text" placeholder="例：山田 太郎"><label>生年月日</label><div class="date"><input id="year" type="number" inputmode="numeric" placeholder="年 例:1968"><input id="month" type="number" inputmode="numeric" placeholder="月"><input id="day" type="number" inputmode="numeric" placeholder="日"></div><label>出生時間</label><select id="hour"><option value="">不明</option><option value="0">子の刻 23:00〜0:59</option><option value="2">丑の刻 1:00〜2:59</option><option value="4">寅の刻 3:00〜4:59</option><option value="6">卯の刻 5:00〜6:59</option><option value="8">辰の刻 7:00〜8:59</option><option value="10">巳の刻 9:00〜10:59</option><option value="12">午の刻 11:00〜12:59</option><option value="14">未の刻 13:00〜14:59</option><option value="16">申の刻 15:00〜16:59</option><option value="18">酉の刻 17:00〜18:59</option><option value="20">戌の刻 19:00〜20:59</option><option value="22">亥の刻 21:00〜22:59</option></select><button type="button" onclick="diagnose()">診断開始</button></section>
-<main id="result" class="hidden"><section class="resultHead"><p class="small">BodyOS 診断結果</p><h2 id="patientTitle"></h2><p id="patientMeta" class="small"></p></section><section class="section"><h2 class="section-title"><span class="step">2</span>本来の身体設計図</h2><div class="grid2"><div class="card"><p class="card-label">本来の軸</p><h3 id="core"></h3><p id="coreText"></p></div><div class="card"><p class="card-label">本来の仕様</p><h3 id="risk"></h3><p id="riskText"></p></div></div><div class="card"><p class="card-label">力が出る条件</p><h3 id="power"></h3><p>この条件が整うと、本来の身体の使い方に戻りやすくなります。</p></div></section>
-<section class="section noPrint"><h2 class="section-title"><span class="step">3</span>UG6 現在地チェック</h2><div class="checkGrid"><label class="ug6Card"><input type="checkbox" class="ug6" value="1"><span><span class="ug6Main">止まれない</span><br><span class="ug6Sub">静止保持・揺れ・止まる力</span></span></label><label class="ug6Card"><input type="checkbox" class="ug6" value="2"><span><span class="ug6Main">上に浮く</span><br><span class="ug6Sub">肩・首・呼吸・上実下虚</span></span></label><label class="ug6Card"><input type="checkbox" class="ug6" value="3"><span><span class="ug6Main">外に漏れる</span><br><span class="ug6Sub">輪郭・前ならえ・力の漏れ</span></span></label><label class="ug6Card"><input type="checkbox" class="ug6" value="4"><span><span class="ug6Main">時間が合わない</span><br><span class="ug6Sub">拍子・歩行・切り替え</span></span></label><label class="ug6Card"><input type="checkbox" class="ug6" value="5"><span><span class="ug6Main">頭に集まる</span><br><span class="ug6Sub">計算・視線・頭側偏位</span></span></label><label class="ug6Card"><input type="checkbox" class="ug6" value="6"><span><span class="ug6Main">受け取れない</span><br><span class="ug6Sub">入力・反応・短指示</span></span></label></div><button type="button" class="secondary" onclick="judgeCurrent()">現在地を判定する</button></section>
-<section id="osSection" class="section hidden"><h2 class="section-title"><span class="step">4</span>BodyOS 現在地</h2><div class="scorePanel"><div class="scoreTitle">本来への復帰率</div><div id="score" class="score">--%</div><div class="barWrap"><div id="scoreBar" class="bar"></div></div><div id="scoreText" class="osLine"></div></div><div class="grid2"><div class="card"><p class="card-label">本来と現在地</p><h3 id="compare"></h3><p id="comment"></p></div><div class="card"><p class="card-label">BodyOS MAP</p><div class="map"><div class="mapLabel home">本来</div><div class="dot home"></div><div class="dash"></div><div id="nowDot" class="dot now"></div><div class="mapLabel now">現在地</div></div></div></div></section>
-<section id="interventionSection" class="section hidden"><h2 class="section-title"><span class="step">5</span>今日の優先介入</h2><div id="interventionList"></div><div class="card noPrint"><p class="card-label">今日のメモ</p><textarea class="memo" placeholder="施術後の変化・次回見るポイントなど"></textarea></div><button class="light noPrint" onclick="window.print()">印刷 / PDF保存</button></section>
-<section class="section teacher"><details><summary>▼ 先生モード：命式・判定根拠</summary><p class="small">現時点ではβ版簡易命式です。正式版では節入り・蔵干・通変星・十二運・空亡を追加します。</p><table><tr><th></th><th>天干</th><th>地支</th><th>五行</th></tr><tr><th>年柱</th><td id="yearStem"></td><td id="yearBranch"></td><td id="yearElement"></td></tr><tr><th>月柱</th><td id="monthStem"></td><td id="monthBranch"></td><td id="monthElement"></td></tr><tr><th>日柱</th><td id="dayStem"></td><td id="dayBranch"></td><td id="dayElement"></td></tr><tr><th>時柱</th><td id="hourStem"></td><td id="hourBranch"></td><td id="hourElement"></td></tr></table><div class="card"><p class="card-label">五行集計</p><h3 id="elements"></h3><p id="logic" class="small"></p></div><div class="card"><p class="card-label">復帰率計算根拠</p><p id="scoreReason" class="small">現在地判定後に表示されます。</p></div></details></section></main><div class="footerNote">UG LAB BodyOS 1.0 alpha / 本来は仕様。現在地だけを評価する。</div></div>
+
+<body>
+<div class="app">
+  <div class="hero">
+    <h1>身体OS診断</h1>
+    <p>設計図は変えられない。現在地は変えられる。<br>身体が答え。本来へ戻るための現在地を観る。</p>
+  </div>
+
+  <div class="panel noPrint">
+    <h2>1 身体設計図を呼び出す</h2>
+
+    <label>お名前</label>
+    <input id="name" type="text" placeholder="例：長谷川">
+
+    <label>生年月日</label>
+    <div class="date">
+      <input id="year" type="number" placeholder="年 例:1968">
+      <input id="month" type="number" placeholder="月">
+      <input id="day" type="number" placeholder="日">
+    </div>
+
+    <label>出生時間</label>
+    <select id="hour">
+      <option value="">不明</option>
+      <option value="0">子の刻 23:00〜0:59</option>
+      <option value="2">丑の刻 1:00〜2:59</option>
+      <option value="4">寅の刻 3:00〜4:59</option>
+      <option value="6">卯の刻 5:00〜6:59</option>
+      <option value="8">辰の刻 7:00〜8:59</option>
+      <option value="10">巳の刻 9:00〜10:59</option>
+      <option value="12">午の刻 11:00〜12:59</option>
+      <option value="14">未の刻 13:00〜14:59</option>
+      <option value="16">申の刻 15:00〜16:59</option>
+      <option value="18">酉の刻 17:00〜18:59</option>
+      <option value="20">戌の刻 19:00〜20:59</option>
+      <option value="22">亥の刻 21:00〜22:59</option>
+    </select>
+
+    <button onclick="diagnose()">診断開始</button>
+  </div>
+
+  <div id="result" class="hidden">
+    <div class="section">
+      <p class="small">BodyOS 診断結果</p>
+      <h2 id="title"></h2>
+      <p id="meta" class="small"></p>
+
+      <div class="card">
+        <p class="small">本来の身体</p>
+        <h3 id="core"></h3>
+        <p id="coreText"></p>
+      </div>
+
+      <div class="card">
+        <p class="small">本来の仕様</p>
+        <h3 id="risk"></h3>
+        <p id="riskText"></p>
+      </div>
+
+      <div class="card">
+        <p class="small">力が出る条件</p>
+        <h3 id="power"></h3>
+      </div>
+    </div>
+
+    <div class="section noPrint">
+      <h2>2 UG6 現在地チェック</h2>
+      <div class="check">
+        <label><input type="checkbox" class="ug6" value="1">① 止まれない</label>
+        <label><input type="checkbox" class="ug6" value="2">② 上に浮く</label>
+        <label><input type="checkbox" class="ug6" value="3">③ 外に漏れる</label>
+        <label><input type="checkbox" class="ug6" value="4">④ 時間が合わない</label>
+        <label><input type="checkbox" class="ug6" value="5">⑤ 頭に集まる</label>
+        <label><input type="checkbox" class="ug6" value="6">⑥ 受け取れない</label>
+      </div>
+      <button class="green" onclick="judgeCurrent()">現在地を判定する</button>
+    </div>
+
+    <div id="os" class="section hidden">
+      <h2>3 BodyOS 現在地</h2>
+      <div class="scoreBox">
+        <p class="small">本来への復帰率</p>
+        <div id="score" class="score">--%</div>
+        <div class="barWrap"><div id="bar" class="bar"></div></div>
+        <p id="scoreText"></p>
+      </div>
+
+      <div class="card">
+        <p class="small">今日の身体</p>
+        <h3 id="compare"></h3>
+        <p id="comment"></p>
+      </div>
+
+      <div class="card">
+        <p class="small">優先介入（先生用）</p>
+        <h3 id="intervention"></h3>
+      </div>
+
+      <textarea placeholder="今日変わったこと・先生メモ"></textarea>
+      <button onclick="window.print()">印刷・PDF保存</button>
+    </div>
+
+    <div class="section">
+      <details>
+        <summary>▼ 先生用命式を表示</summary>
+        <table>
+          <tr><th></th><th>天干</th><th>地支</th><th>五行</th></tr>
+          <tr><th>年柱</th><td id="ys"></td><td id="yb"></td><td id="ye"></td></tr>
+          <tr><th>月柱</th><td id="ms"></td><td id="mb"></td><td id="me"></td></tr>
+          <tr><th>日柱</th><td id="ds"></td><td id="db"></td><td id="de"></td></tr>
+          <tr><th>時柱</th><td id="hs"></td><td id="hb"></td><td id="he"></td></tr>
+        </table>
+        <p id="reason" class="small"></p>
+      </details>
+    </div>
+  </div>
+</div>
+
 <script>
-const stems=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'],branches=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
-const stemEl={甲:'木',乙:'木',丙:'火',丁:'火',戊:'土',己:'土',庚:'金',辛:'金',壬:'水',癸:'水'},branchEl={寅:'木',卯:'木',巳:'火',午:'火',辰:'土',戌:'土',丑:'土',未:'土',申:'金',酉:'金',亥:'水',子:'水'};
-const ug6Name={1:'①止まれない',2:'②上に浮く',3:'③外に漏れる',4:'④時間が合わない',5:'⑤頭に集まる',6:'⑥受け取れない'};
-const blueprint={甲:{core:'🌳 根を張る軸',body:'足元から力を使い、まっすぐ伸びるように動ける身体です。',risk:'1',riskText:'止まれない方向は本来の仕様です。悪ではなく、止まる土台があるかを観ます。',power:['足裏','伸びる方向']},乙:{core:'🌿 しなやか軸',body:'力で押すより、流れに合わせてしなやかに整う身体です。',risk:'3',riskText:'外に漏れる方向は本来の仕様です。悪ではなく、輪郭を保てるかを観ます。',power:['呼吸','余白']},丙:{core:'☀️ 開く軸',body:'明るく外へ開くことで、巡りが出やすい身体です。',risk:'2',riskText:'上に浮く方向は本来の仕様です。悪ではなく、下が使えているかを観ます。',power:['胸の開き','視線']},丁:{core:'🔥 灯す軸',body:'小さな集中と呼吸で、内側から力が灯る身体です。',risk:'5',riskText:'頭に集まる方向は本来の仕様です。悪ではなく、身体へ戻せるかを観ます。',power:['深い呼吸','静かな集中']},戊:{core:'⛰ 支える軸',body:'中心が決まると、どっしり支えられる身体です。',risk:'4',riskText:'時間が合わない方向は本来の仕様です。悪ではなく、切り替えと間合いを観ます。',power:['骨盤','腹の安定']},己:{core:'🌾 育てる軸',body:'整った環境の中で、じわじわ力を育てる身体です。',risk:'6',riskText:'受け取れない方向は本来の仕様です。悪ではなく、入力の入口を観ます。',power:['安心感','一定のリズム']},庚:{core:'⚙️ 整える軸',body:'余分なものを削ぎ、動きをはっきりさせると力が出る身体です。',risk:'3',riskText:'外に漏れる方向は本来の仕様です。輪郭と首の抜けを観ます。',power:['姿勢の線','首の抜け']},辛:{core:'💎 磨く軸',body:'繊細な感覚で、細かなズレに気づける身体です。',risk:'5',riskText:'頭に集まる方向は本来の仕様です。感覚を身体へ戻せるかを観ます。',power:['静けさ','細かな感覚']},壬:{core:'🌊 流れる軸',body:'止めずに流れを作ることで、大きく動ける身体です。',risk:'4',riskText:'時間が合わない方向は本来の仕様です。歩行とリズムを観ます。',power:['歩行','流れ']},癸:{core:'💧 深める軸',body:'静かに深く入り、内側から回復していく身体です。',risk:'6',riskText:'受け取れない方向は本来の仕様です。入力が薄くなっていないかを観ます。',power:['休息','下半身の感覚']}};
-const branchPower={子:['休息','下半身の感覚'],丑:['骨盤','安心感'],寅:['足裏','伸びる方向'],卯:['呼吸','余白'],辰:['腹の安定','切り替え'],巳:['胸の開き','温度'],午:['視線','発散'],未:['安心感','一定のリズム'],申:['姿勢の線','首の抜け'],酉:['静けさ','細かな感覚'],戌:['骨盤','支える力'],亥:['歩行','流れ']};
-const related={1:['2','5'],2:['1','5'],3:['5','6'],4:['6','1'],5:['2','3'],6:['4','3']},comboPenalty={'1-2':10,'2-5':10,'1-6':12,'4-6':8,'3-5':5,'3-6':5,'1-5':7};
-let current=null;function mod(n,m){return((n%m)+m)%m}function days(y,m,d){y-=m<=2?1:0;const era=Math.floor(y/400),yoe=y-era*400,doy=Math.floor((153*(m+(m>2?-3:9))+2)/5)+d-1,doe=yoe*365+Math.floor(yoe/4)-Math.floor(yoe/100)+doy;return era*146097+doe-719468}function yearPillar(y){const idx=mod(y-1984,60);return{stem:stems[idx%10],branch:branches[idx%12]}}function monthPillar(y,m){const bi=mod(m,12),ys=stems.indexOf(yearPillar(y).stem),first=mod((ys%5)*2+2,10);return{stem:stems[mod(first+(m-2),10)],branch:branches[bi]}}function dayPillar(y,m,d){const diff=days(y,m,d)-days(1900,1,31);return{stem:stems[mod(diff,10)],branch:branches[mod(diff,12)]}}function hourPillar(dayStem,h){if(h==='')return{stem:'不明',branch:'不明'};const hi=Number(h),bi=hi===0?0:Math.floor((hi+1)/2)%12,ds=stems.indexOf(dayStem),first=mod((ds%5)*2,10);return{stem:stems[mod(first+bi,10)],branch:branches[bi]}}function t(id,v){document.getElementById(id).textContent=v}function eText(p){return(stemEl[p.stem]||'-')+' / '+(branchEl[p.branch]||'-')}function addEl(c,p){if(stemEl[p.stem])c[stemEl[p.stem]]++;if(branchEl[p.branch])c[branchEl[p.branch]]++}
-function diagnose(){const name=document.getElementById('name').value.trim()||'ゲスト',y=Number(year.value),m=Number(month.value),d=Number(day.value),h=hour.value;if(!y||!m||!d){alert('年・月・日を数字で入れてください');return}if(y<1900||y>2026||m<1||m>12||d<1||d>31||d>new Date(y,m,0).getDate()){alert('生年月日を確認してください');return}const yp=yearPillar(y),mp=monthPillar(y,m),dp=dayPillar(y,m,d),hp=hourPillar(dp.stem,h),bp=blueprint[dp.stem],powers=[];[...bp.power,...(branchPower[mp.branch]||[])].forEach(x=>{if(!powers.includes(x)&&powers.length<3)powers.push(x)});current={name,y,m,d,yp,mp,dp,hp,bp,home:bp.risk};t('patientTitle',name+' さん');t('patientMeta',`${y}年${m}月${d}日 ｜ 日干:${dp.stem} ｜ 日支:${dp.branch}`);t('core',bp.core);t('coreText',bp.body);t('risk',ug6Name[bp.risk]);t('riskText',bp.riskText+'\n\n※本来は仕様です。ここは減点しません。');t('power','✅ '+powers.join('　✅ '));t('yearStem',yp.stem);t('yearBranch',yp.branch);t('yearElement',eText(yp));t('monthStem',mp.stem);t('monthBranch',mp.branch);t('monthElement',eText(mp));t('dayStem',dp.stem);t('dayBranch',dp.branch);t('dayElement',eText(dp));t('hourStem',hp.stem);t('hourBranch',hp.branch);t('hourElement',eText(hp));const counts={木:0,火:0,土:0,金:0,水:0};[yp,mp,dp,hp].forEach(p=>addEl(counts,p));t('elements',`木${counts.木}・火${counts.火}・土${counts.土}・金${counts.金}・水${counts.水}`);t('logic',`日干${dp.stem}を身体設計図の軸として使用。月支${mp.branch}で力が出る条件を補正。UG6で現在地を確認します。`);document.querySelectorAll('.ug6').forEach(x=>x.checked=false);osSection.classList.add('hidden');interventionSection.classList.add('hidden');result.classList.remove('hidden');result.scrollIntoView({behavior:'smooth'})}
-function selectedUG6(){return Array.from(document.querySelectorAll('.ug6:checked')).map(x=>x.value)}function calculate(home,selected){if(selected.length===0)return{score:100,reasons:['UG6上、大きな崩れは未検出。'],penalty:0};let penalty=0,reasons=[];selected.forEach(x=>{if(x===home){reasons.push(`${ug6Name[x]}：本来の仕様。減点なし。`)}else if((related[home]||[]).includes(x)){penalty+=8;reasons.push(`${ug6Name[x]}：崩れやすい関連方向。−8。`)}else{penalty+=15;reasons.push(`${ug6Name[x]}：本来とは別方向。−15。`)}});const s=[...selected].sort();for(let i=0;i<s.length;i++){for(let j=i+1;j<s.length;j++){const key=s[i]+'-'+s[j];if(comboPenalty[key]){penalty+=comboPenalty[key];reasons.push(`${ug6Name[s[i]]}＋${ug6Name[s[j]]}：同時発現補正 −${comboPenalty[key]}。`)}}}return{score:Math.max(15,100-penalty),reasons,penalty}}
-function scoreText(score){if(score>=90)return'本来にかなり近い状態です。';if(score>=75)return'本来に近いが、少しズレが出ています。';if(score>=55)return'現在地が本来からやや離れています。';if(score>=35)return'本来とは別方向の負担が目立ちます。';return'現在地がかなり離れています。まず入力と安定を優先します。'}function bodyComment(home,selected,score){if(selected.length===0)return'今日の身体は、本来から大きく離れていないように見えます。\nただし、最終判断は身体の反応を優先します。';let txt=`本来の仕様は「${ug6Name[home]}」です。\n現在地は「${selected.map(x=>ug6Name[x]).join('・')}」です。\n\n`;if(selected.includes(home))txt+='本来持っている方向も出ています。これは悪ではなく仕様です。\n';if(selected.includes('1'))txt+='身体が止まりにくく、前へ進む力が過剰になっています。\n';if(selected.includes('2'))txt+='重心が上へ浮き、肩・首・呼吸に負担が出やすい状態です。\n';if(selected.includes('3'))txt+='身体の輪郭がぼやけ、力が外へ漏れやすい状態です。\n';if(selected.includes('4'))txt+='動き出しや切り替えの拍子が合いにくい状態です。\n';if(selected.includes('5'))txt+='頭側へ負担が集まり、身体の下が使いにくい可能性があります。\n';if(selected.includes('6'))txt+='入力が入りにくく、反応が薄くなっている可能性があります。\n';return txt+'\n'+scoreText(score)}function interventions(selected){let list=[];if(selected.includes('5')||selected.includes('2'))list.push(['★★★★★','上部頸椎','頭側・上浮きの確認']);if(selected.includes('1'))list.push(['★★★★☆','骨盤・足底','止まれる土台づくり']);if(selected.includes('3'))list.push(['★★★★☆','輪郭接触','外へ漏れる力をまとめる']);if(selected.includes('4'))list.push(['★★★☆☆','歩行・拍子','リズムを合わせる']);if(selected.includes('6'))list.push(['★★★★☆','軽接触→短指示','入力と反応の確認']);if(list.length===0)list.push(['★★★☆☆','再検査','身体反応を優先']);return list}
-function judgeCurrent(){if(!current){alert('先に診断開始してください');return}const selected=selectedUG6(),r=calculate(current.home,selected);t('score',r.score+'%');scoreBar.style.width=r.score+'%';t('scoreText',scoreText(r.score)+'　本来まであと'+(100-r.score)+'%');t('compare',`本来：${ug6Name[current.home]}\n現在地：${selected.length?selected.map(x=>ug6Name[x]).join('・'):'大きな崩れなし'}`);t('comment',bodyComment(current.home,selected,r.score));t('scoreReason',r.reasons.join('\n'));nowDot.style.top=(36+(100-r.score)/100*42)+'%';interventionList.innerHTML='';interventions(selected).forEach(([star,name,reason])=>{const div=document.createElement('div');div.className='rank';div.innerHTML=`<div><strong>${name}</strong><br><span class="small">${reason}</span></div><div class="stars">${star}</div>`;interventionList.appendChild(div)});osSection.classList.remove('hidden');interventionSection.classList.remove('hidden');osSection.scrollIntoView({behavior:'smooth'})}
-</script></body></html>
+var stems=["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+var branches=["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+var stemEl={"甲":"木","乙":"木","丙":"火","丁":"火","戊":"土","己":"土","庚":"金","辛":"金","壬":"水","癸":"水"};
+var branchEl={"寅":"木","卯":"木","巳":"火","午":"火","辰":"土","戌":"土","丑":"土","未":"土","申":"金","酉":"金","亥":"水","子":"水"};
+var ug6Name={"1":"①止まれない","2":"②上に浮く","3":"③外に漏れる","4":"④時間が合わない","5":"⑤頭に集まる","6":"⑥受け取れない"};
+
+var bp={
+"甲":{core:"🌳 根を張る軸",text:"足元から力を使い、まっすぐ伸びる身体です。",risk:"1",riskText:"止まれない方向は本来の仕様です。",power:"足裏・伸びる方向"},
+"乙":{core:"🌿 しなやか軸",text:"力で押すより、流れに合わせて整う身体です。",risk:"3",riskText:"外に漏れる方向は本来の仕様です。",power:"呼吸・余白"},
+"丙":{core:"☀️ 開く軸",text:"外へ開くことで巡りが出やすい身体です。",risk:"2",riskText:"上に浮く方向は本来の仕様です。",power:"胸の開き・視線"},
+"丁":{core:"🔥 灯す軸",text:"小さな集中と呼吸で内側から力が灯る身体です。",risk:"5",riskText:"頭に集まる方向は本来の仕様です。",power:"深い呼吸・静かな集中"},
+"戊":{core:"⛰ 支える軸",text:"中心が決まると、どっしり支えられる身体です。",risk:"4",riskText:"時間が合わない方向は本来の仕様です。",power:"骨盤・腹の安定"},
+"己":{core:"🌾 育てる軸",text:"整った環境で、じわじわ力を育てる身体です。",risk:"6",riskText:"受け取れない方向は本来の仕様です。",power:"安心感・一定のリズム"},
+"庚":{core:"⚙️ 整える軸",text:"余分なものを削ぎ、動きをはっきりさせる身体です。",risk:"3",riskText:"外に漏れる方向は本来の仕様です。",power:"姿勢の線・首の抜け"},
+"辛":{core:"💎 磨く軸",text:"細かなズレに気づける繊細な身体です。",risk:"5",riskText:"頭に集まる方向は本来の仕様です。",power:"静けさ・細かな感覚"},
+"壬":{core:"🌊 流れる軸",text:"流れを作ることで大きく動ける身体です。",risk:"4",riskText:"時間が合わない方向は本来の仕様です。",power:"歩行・流れ"},
+"癸":{core:"💧 深める軸",text:"静かに深く入り、内側から回復する身体です。",risk:"6",riskText:"受け取れない方向は本来の仕様です。",power:"休息・下半身の感覚"}
+};
+
+var related={"1":["2","5"],"2":["1","5"],"3":["5","6"],"4":["6","1"],"5":["2","3"],"6":["4","3"]};
+var combo={"1-2":10,"2-5":10,"1-6":12,"4-6":8,"3-5":5,"3-6":5,"1-5":7};
+var current=null;
+
+function mod(n,m){return ((n%m)+m)%m;}
+function days(y,m,d){
+  y-=m<=2?1:0;
+  var era=Math.floor(y/400);
+  var yoe=y-era*400;
+  var doy=Math.floor((153*(m+(m>2?-3:9))+2)/5)+d-1;
+  var doe=yoe*365+Math.floor(yoe/4)-Math.floor(yoe/100)+doy;
+  return era*146097+doe-719468;
+}
+function yearPillar(y){var idx=mod(y-1984,60);return {stem:stems[idx%10],branch:branches[idx%12]};}
+function monthPillar(y,m){var bi=mod(m,12);var ys=stems.indexOf(yearPillar(y).stem);var first=mod((ys%5)*2+2,10);return {stem:stems[mod(first+(m-2),10)],branch:branches[bi]};}
+function dayPillar(y,m,d){var diff=days(y,m,d)-days(1900,1,31);return {stem:stems[mod(diff,10)],branch:branches[mod(diff,12)]};}
+function hourPillar(dayStem,h){if(h==="")return {stem:"不明",branch:"不明"};var hi=Number(h);var bi=hi===0?0:Math.floor((hi+1)/2)%12;var ds=stems.indexOf(dayStem);var first=mod((ds%5)*2,10);return {stem:stems[mod(first+bi,10)],branch:branches[bi]};}
+function text(id,v){document.getElementById(id).textContent=v;}
+function elText(p){return (stemEl[p.stem]||"-")+" / "+(branchEl[p.branch]||"-");}
+
+function diagnose(){
+  var name=document.getElementById("name").value || "ゲスト";
+  var y=Number(document.getElementById("year").value);
+  var m=Number(document.getElementById("month").value);
+  var d=Number(document.getElementById("day").value);
+  var h=document.getElementById("hour").value;
+
+  if(!y||!m||!d){alert("生年月日を入れてください");return;}
+  if(m<1||m>12||d<1||d>31){alert("日付を確認してください");return;}
+
+  var yp=yearPillar(y);
+  var mp=monthPillar(y,m);
+  var dp=dayPillar(y,m,d);
+  var hp=hourPillar(dp.stem,h);
+  var b=bp[dp.stem];
+
+  current={name:name,home:b.risk,dp:dp};
+
+  text("title",name+" さん");
+  text("meta",y+"年"+m+"月"+d+"日 ｜ 日干:"+dp.stem+" ｜ 日支:"+dp.branch);
+  text("core",b.core);
+  text("coreText",b.text);
+  text("risk",ug6Name[b.risk]);
+  text("riskText",b.riskText+"\n※本来は仕様です。ここは減点しません。");
+  text("power","✅ "+b.power);
+
+  text("ys",yp.stem); text("yb",yp.branch); text("ye",elText(yp));
+  text("ms",mp.stem); text("mb",mp.branch); text("me",elText(mp));
+  text("ds",dp.stem); text("db",dp.branch); text("de",elText(dp));
+  text("hs",hp.stem); text("hb",hp.branch); text("he",elText(hp));
+  text("reason","日干を本来の軸として身体設計図へ変換。UG6で現在地を確認します。");
+
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("os").classList.add("hidden");
+  var checks=document.querySelectorAll(".ug6");
+  for(var i=0;i<checks.length;i++){checks[i].checked=false;}
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+
+function selectedUG6(){
+  var arr=[];
+  var checks=document.querySelectorAll(".ug6");
+  for(var i=0;i<checks.length;i++){if(checks[i].checked)arr.push(checks[i].value);}
+  return arr;
+}
+
+function calculate(home,sel){
+  var penalty=0;
+  var reasons=[];
+  if(sel.length===0)return {score:100,reasons:["大きな崩れは未検出。"]};
+
+  for(var i=0;i<sel.length;i++){
+    var x=sel[i];
+    if(x===home){reasons.push(ug6Name[x]+"：本来の仕様。減点なし。");}
+    else if((related[home]||[]).indexOf(x)>=0){penalty+=8;reasons.push(ug6Name[x]+"：崩れやすい方向。−8。");}
+    else{penalty+=15;reasons.push(ug6Name[x]+"：本来とは別方向。−15。");}
+  }
+
+  var sorted=sel.slice().sort();
+  for(var a=0;a<sorted.length;a++){
+    for(var b=a+1;b<sorted.length;b++){
+      var key=sorted[a]+"-"+sorted[b];
+      if(combo[key]){penalty+=combo[key];reasons.push(ug6Name[sorted[a]]+"＋"+ug6Name[sorted[b]]+"：同時発現補正 −"+combo[key]+"。");}
+    }
+  }
+  return {score:Math.max(15,100-penalty),reasons:reasons};
+}
+
+function label(score){
+  if(score>=90)return "本来にかなり近い状態です。";
+  if(score>=75)return "本来に近いが、少しズレが出ています。";
+  if(score>=55)return "現在地が本来からやや離れています。";
+  if(score>=35)return "本来とは別方向の負担が目立ちます。";
+  return "現在地がかなり離れています。まず入力と安定を優先します。";
+}
+
+function comment(sel,score){
+  if(sel.length===0)return "今日の身体は、本来から大きく離れていないように見えます。";
+  var t="現在地は「"+sel.map(function(x){return ug6Name[x]}).join("・")+"」です。\n\n";
+  if(sel.indexOf("1")>=0)t+="止まりにくく、前へ進む力が過剰です。\n";
+  if(sel.indexOf("2")>=0)t+="重心が上へ浮き、肩・首・呼吸に負担が出やすい状態です。\n";
+  if(sel.indexOf("3")>=0)t+="輪郭がぼやけ、力が外へ漏れやすい状態です。\n";
+  if(sel.indexOf("4")>=0)t+="動き出しや切り替えの拍子が合いにくい状態です。\n";
+  if(sel.indexOf("5")>=0)t+="頭側へ負担が集まり、身体の下が使いにくい可能性があります。\n";
+  if(sel.indexOf("6")>=0)t+="入力が入りにくく、反応が薄くなっている可能性があります。\n";
+  return t+"\n"+label(score);
+}
+
+function intervention(sel){
+  var out=[];
+  if(sel.indexOf("5")>=0||sel.indexOf("2")>=0)out.push("★★★★★ 上部頸椎：頭側・上浮きの確認");
+  if(sel.indexOf("1")>=0)out.push("★★★★☆ 骨盤・足底：止まれる土台づくり");
+  if(sel.indexOf("3")>=0)out.push("★★★★☆ 輪郭接触：外へ漏れる力をまとめる");
+  if(sel.indexOf("4")>=0)out.push("★★★☆☆ 歩行・拍子：リズムを合わせる");
+  if(sel.indexOf("6")>=0)out.push("★★★★☆ 軽接触→短指示：入力と反応確認");
+  if(out.length===0)out.push("★★★☆☆ 再検査：身体反応を優先");
+  return out.join("\n");
+}
+
+function judgeCurrent(){
+  if(!current){alert("先に診断開始してください");return;}
+  var sel=selectedUG6();
+  var r=calculate(current.home,sel);
+
+  text("score",r.score+"%");
+  document.getElementById("bar").style.width=r.score+"%";
+  text("scoreText",label(r.score)+"　本来まであと"+(100-r.score)+"%");
+  text("compare","本来："+ug6Name[current.home]+"\n現在地："+(sel.length?sel.map(function(x){return ug6Name[x]}).join("・"):"大きな崩れなし"));
+  text("comment",comment(sel,r.score)+"\n\n判定根拠：\n"+r.reasons.join("\n"));
+  text("intervention",intervention(sel));
+
+  document.getElementById("os").classList.remove("hidden");
+  document.getElementById("os").scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>
