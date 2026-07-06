@@ -142,7 +142,9 @@ const Records = (() => {
 
   function checkQuality(showAlert=true){
     const q = requiredCheck();
-    const patient = findExistingPatientOnly();
+    const patient = findExistingPatientOnly,
+    deleteCurrentPatient,
+    deleteAllData();
     const el = $("qualityStatus");
 
     if(el){
@@ -168,7 +170,9 @@ const Records = (() => {
     return q;
   }
 
-  function findExistingPatientOnly(){
+  function findExistingPatientOnly,
+    deleteCurrentPatient,
+    deleteAllData(){
     const key = patientKey();
     if(!key) return null;
     return getPatients().find(p => p.patientKey === key) || null;
@@ -337,6 +341,79 @@ const Records = (() => {
     download("uglab_research_records.csv", csv, "text/csv");
   }
 
+
+  function deleteCurrentPatient(){
+    const key = patientKey();
+    if(!key){
+      alert("患者名・生年月日・性別が分からないため削除できません。");
+      return;
+    }
+
+    const patient = getPatients().find(p => p.patientKey === key);
+    if(!patient){
+      alert("この患者の保存データは見つかりません。");
+      return;
+    }
+
+    const count = getRecords().filter(r => r.patientId === patient.patientId).length;
+
+    const ok1 = confirm(`この患者の研究データを削除しますか？\n\n患者ID: ${patient.patientId}\n記録数: ${count}件\n\nこの操作は元に戻せません。`);
+    if(!ok1) return;
+
+    const ok2 = confirm("本当に削除しますか？\n\n削除する前に必要ならJSON/CSV出力でバックアップしてください。");
+    if(!ok2) return;
+
+    const newPatients = getPatients().filter(p => p.patientId !== patient.patientId);
+    const newRecords = getRecords().filter(r => r.patientId !== patient.patientId);
+
+    setPatients(newPatients);
+    setRecords(newRecords);
+
+    const researchIdInput = $("researchId");
+    if(researchIdInput) researchIdInput.value = "";
+
+    const status = $("recordStatus");
+    const preview = $("recordPreview");
+    if(status) status.textContent = `患者ID ${patient.patientId} のデータを削除しました。残り保存件数：${newRecords.length}件`;
+    if(preview) preview.textContent = "";
+
+    checkQuality(false);
+    alert("この患者の研究データを削除しました。");
+  }
+
+  function deleteAllData(){
+    const records = getRecords();
+    const patients = getPatients();
+
+    const ok1 = confirm(`全研究データを削除しますか？\n\n患者数: ${patients.length}名\n記録数: ${records.length}件\n\nこの操作は元に戻せません。`);
+    if(!ok1) return;
+
+    const word = prompt("完全削除する場合は「削除」と入力してください。");
+    if(word !== "削除"){
+      alert("削除を中止しました。");
+      return;
+    }
+
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(PATIENTS_KEY);
+    localStorage.removeItem(COUNTER_KEY);
+    localStorage.removeItem(PATIENT_COUNTER_KEY);
+
+    const researchIdInput = $("researchId");
+    if(researchIdInput) researchIdInput.value = "";
+
+    const status = $("recordStatus");
+    const preview = $("recordPreview");
+    const quality = $("qualityStatus");
+
+    if(status) status.textContent = "全研究データを削除しました。";
+    if(preview) preview.textContent = "";
+    if(quality) quality.textContent = "未チェック";
+
+    alert("全研究データを削除しました。");
+  }
+
+
   window.addEventListener("DOMContentLoaded", toggleResearchMode);
 
   return {
@@ -348,6 +425,8 @@ const Records = (() => {
     collect,
     getRecords,
     getPatients,
-    findExistingPatientOnly
+    findExistingPatientOnly,
+    deleteCurrentPatient,
+    deleteAllData
   };
 })();

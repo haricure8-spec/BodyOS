@@ -1,48 +1,43 @@
-const App = (() => {
-  let lastResult=null;
+# UG LAB
 
-  function $(id){return document.getElementById(id);}
-  function today(){
-    const d=new Date();
-    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-  }
-  function hasBirth(){
-    return $("year").value && $("month").value && $("day").value;
-  }
-  function calc(){
-    if(!hasBirth()){
-      $("analysis").innerHTML='<p class="small">生年月日を入力してから命式を作成してください。</p>';
-      return;
-    }
-    lastResult=Calendar.calc({year:$("year").value,month:$("month").value,day:$("day").value,hour:$("hour").value,minute:$("minute").value});
-    const counts=BodyOS.fiveElements(lastResult.pillars);
-    const ug=BodyOS.ugFromFive(counts);
-    $("analysis").innerHTML=`
-      <h2>BodyOS解析</h2>
-      <div class="summary-grid">
-        <div class="summary-card"><h3>UG6仮説</h3><div class="big">${ug.predicted.join("・")}</div></div>
-        <div class="summary-card"><h3>命式</h3><div>${lastResult.pillars.year} / ${lastResult.pillars.month} / ${lastResult.pillars.day} / ${lastResult.pillars.hour}</div></div>
-        <div class="summary-card"><h3>五行</h3><div>木:${counts["木"]} 火:${counts["火"]} 土:${counts["土"]} 金:${counts["金"]} 水:${counts["水"]}</div></div>
-      </div>`;
-    autoCare();
-  }
-  function autoCare(){
-    if(!lastResult) return;
-    const rec=BodyOS.care(BodyOS.currentCodes(lastResult));
-    if(!$("homeCare").value) $("homeCare").value=rec.care.join("・");
-    if(!$("nextCheck").value) $("nextCheck").value=rec.next.join("・");
-    if(!$("treatmentMemo").value) $("treatmentMemo").value=rec.focus.join("・")+"を確認";
-    $("autoCare").innerHTML=`
-      <div class="autocare-title">UG自動提案 ${rec.codes.join("・") || ""} ${rec.theme ? "｜"+rec.theme : ""}</div>
-      <div class="autocare-list"><b>サマリー：</b>${rec.summary || ""}<br><b>セルフケア：</b>${rec.care.join("・")}<br><b>次回確認：</b>${rec.next.join("・")}</div>`;
-  }
-  function beforeJudge(){ autoCare(); $("beforeResult").innerHTML="施術前："+BodyOS.checked("beforeTest").join("・"); }
-  function afterJudge(){ autoCare(); $("afterResult").innerHTML="施術後："+BodyOS.checked("afterTest").join("・"); }
-  function getResult(){ if(!lastResult) calc(); return lastResult; }
+## 継続記録対応
 
-  window.addEventListener("DOMContentLoaded",()=>{
-    $("visitDate").value=today();
-  });
+同一患者は以下で判定します。
 
-  return {calc,autoCare,beforeJudge,afterJudge,getResult};
-})();
+- 患者名
+- 性別
+- 生年月日
+
+同じ患者と判定された場合、同じ `patientId` に継続記録されます。
+
+例:
+
+- `BP-000001-V001`
+- `BP-000001-V002`
+- `BP-000001-V003`
+
+同じ患者・同じ診療日の保存は上書きします。
+同じ患者・別日の保存は来院回数が増えます。
+
+## 研究モード
+
+通常診療では保存なしで使えます。
+保存したい症例だけ研究モードをONにしてください。
+
+## 出力
+
+- JSON：患者台帳 + 来院記録
+- CSV：来院記録一覧
+
+答えは身体にある。
+
+
+## データ削除機能
+
+研究データ管理から以下を実行できます。
+
+- この患者の研究データを削除
+- 全研究データを削除
+
+削除は元に戻せません。
+必要な場合は削除前に JSON / CSV 出力でバックアップしてください。

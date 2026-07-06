@@ -141,3 +141,16 @@ th{background:#efe3d1}
   overflow:auto;
   font-size:12px;
 }
+
+
+/* Delete buttons */
+.danger-row{
+  margin-top:10px;
+}
+button.danger{
+  background:#9b1c1c;
+  color:white;
+}
+button.danger:hover{
+  filter:brightness(.95);
+}
