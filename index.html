@@ -1,124 +1,86 @@
-<!doctype html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>UG LAB</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-<div class="app">
-  <div class="hero">
-    <h1>UG LAB</h1>
-    <p>答えは身体にある。</p>
-  </div>
-
-  <section class="panel no-print">
-    <h2>患者情報</h2>
-    <div class="grid">
-      <div><label>患者名</label><input id="patientName" placeholder="氏名を入力"></div>
-      <div><label>診療日</label><input id="visitDate" type="date"></div>
-      <div><label>主訴</label><input id="chiefComplaint" placeholder="例：首肩こり・頭痛"></div>
-    </div>
-    <div class="grid">
-      <div><label>年</label><input id="year" type="number" placeholder="西暦"></div>
-      <div><label>月</label><select id="month"><option value="">月</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div>
-      <div><label>日</label><select id="day"><option value="">日</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select></div>
-    </div>
-    <div class="grid">
-      <div><label>時</label><select id="hour"><option value="">不明</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option></select></div>
-      <div><label>分</label><select id="minute"><option value="">不明</option><option value="0">00</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option><option value="37">37</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="41">41</option><option value="42">42</option><option value="43">43</option><option value="44">44</option><option value="45">45</option><option value="46">46</option><option value="47">47</option><option value="48">48</option><option value="49">49</option><option value="50">50</option><option value="51">51</option><option value="52">52</option><option value="53">53</option><option value="54">54</option><option value="55">55</option><option value="56">56</option><option value="57">57</option><option value="58">58</option><option value="59">59</option></select></div>
-      <div><label>性別</label><select id="gender"><option value="">選択</option><option>女</option><option>男</option><option>不明</option></select></div>
-    </div>
-    <button class="green" onclick="App.calc()">命式作成</button>
-  </section>
-
-  <section id="analysis" class="card no-print">
-    <p class="small">生年月日を入力して命式を作成してください。</p>
-  </section>
-
-  <section class="panel no-print">
-    <h2>施術前テスト</h2>
-    <div class="ug6-grid"><div class="ug6-card"><label><input type="checkbox" class="beforeTest" value="①">①止まれない</label></div><div class="ug6-card"><label><input type="checkbox" class="beforeTest" value="②">②上に浮く</label></div><div class="ug6-card"><label><input type="checkbox" class="beforeTest" value="③">③外に漏れる</label></div><div class="ug6-card"><label><input type="checkbox" class="beforeTest" value="④">④時間が合わない</label></div><div class="ug6-card"><label><input type="checkbox" class="beforeTest" value="⑤">⑤頭に集まる</label></div><div class="ug6-card"><label><input type="checkbox" class="beforeTest" value="⑥">⑥受け取れない</label></div></div>
-    <button class="green" onclick="App.beforeJudge()">施術前判定</button>
-    <div id="beforeResult" class="small"></div>
-  </section>
-
-  <section class="panel no-print">
-    <h2>施術後テスト</h2>
-    <div class="ug6-grid"><div class="ug6-card"><label><input type="checkbox" class="afterTest" value="①">①止まれない</label></div><div class="ug6-card"><label><input type="checkbox" class="afterTest" value="②">②上に浮く</label></div><div class="ug6-card"><label><input type="checkbox" class="afterTest" value="③">③外に漏れる</label></div><div class="ug6-card"><label><input type="checkbox" class="afterTest" value="④">④時間が合わない</label></div><div class="ug6-card"><label><input type="checkbox" class="afterTest" value="⑤">⑤頭に集まる</label></div><div class="ug6-card"><label><input type="checkbox" class="afterTest" value="⑥">⑥受け取れない</label></div></div>
-    <button class="green" onclick="App.afterJudge()">施術後判定</button>
-    <div id="afterResult" class="small"></div>
-  </section>
-
-  <section class="panel no-print">
-    <h2>研究モード</h2>
-    <label class="switch-row">
-      <input id="researchMode" type="checkbox" onchange="Records.toggleResearchMode()">
-      <span>研究データとして残す時だけON</span>
-    </label>
-    <p class="small">通常診療ではOFFのままで使えます。保存したい症例だけONにしてください。</p>
-  </section>
-
-  <section class="panel no-print">
-    <h2>記録と出力</h2>
-    <div class="grid">
-      <div><label>施術メモ</label><input id="treatmentMemo" placeholder="UG判定から自動入力されます。必要なら修正"></div>
-      <div><label>セルフケア</label><input id="homeCare" placeholder="UG判定から自動入力されます。必要なら修正"></div>
-      <div><label>次回確認</label><input id="nextCheck" placeholder="UG判定から自動入力されます。必要なら修正"></div>
-    </div>
-    <button class="green" onclick="App.autoCare()">UGから自動入力</button>
-    <div id="autoCare" class="autocare-box"></div>
-    <div id="researchOnly" class="research-only hidden">
-      <div class="grid">
-        <div>
-          <label>予後評価</label>
-          <select id="outcome">
-            <option value="">未評価</option>
-            <option value="著明改善">著明改善</option>
-            <option value="改善">改善</option>
-            <option value="やや改善">やや改善</option>
-            <option value="変化なし">変化なし</option>
-            <option value="悪化">悪化</option>
-          </select>
+const Reports = (() => {
+  function val(id, fallback=""){return document.getElementById(id)?.value.trim() || fallback;}
+  function today(){
+    const d=new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+  function split(text){return text.split(/[、,・]/).map(x=>x.trim()).filter(Boolean).slice(0,3);}
+  function checks(items,mark){return items.map(x=>`${mark} ${x}`).join("<br>");}
+  function data(){
+    const result=App.getResult();
+    const codes=BodyOS.currentCodes(result);
+    const rec=BodyOS.care(codes);
+    return {
+      name:val("patientName","患者さま"),
+      date:val("visitDate",today()),
+      complaint:val("chiefComplaint",""),
+      result,
+      counts:BodyOS.fiveElements(result.pillars),
+      ug:BodyOS.ugFromFive(BodyOS.fiveElements(result.pillars)),
+      before:BodyOS.checked("beforeTest"),
+      after:BodyOS.checked("afterTest"),
+      care:rec,
+      treatment:val("treatmentMemo",rec.focus.join("・")+"を確認"),
+      home:val("homeCare",rec.care.join("・")),
+      next:val("nextCheck",rec.next.join("・"))
+    };
+  }
+  function printMode(mode){
+    document.body.classList.add(mode);
+    setTimeout(()=>{window.print(); document.body.classList.remove(mode);},100);
+  }
+  function chart(){
+    const d=data(), r=d.result, counts=d.counts;
+    const before=d.before.join("・")||"-", after=d.after.join("・")||"-";
+    document.getElementById("chartReport").innerHTML=`
+      <div class="report-a4">
+        <div class="report-head"><div><div class="report-title">UG LAB カルテ</div><div class="small">院内保存用</div></div><div class="report-brand">Clinic Record</div></div>
+        <div class="report-meta"><div><b>患者：</b>${d.name}</div><div><b>日付：</b>${d.date}</div><div><b>主訴：</b>${d.complaint||"-"}</div></div>
+        <div class="report-card"><h3>命式</h3><table><tr><th>年柱</th><th>月柱</th><th>日柱</th><th>時柱</th></tr><tr><td>${r.pillars.year}</td><td>${r.pillars.month}</td><td>${r.pillars.day}</td><td>${r.pillars.hour}</td></tr></table></div>
+        <div class="report-grid2">
+          <div class="report-card"><h3>五行</h3><div class="report-list">木:${counts["木"]}　火:${counts["火"]}　土:${counts["土"]}　金:${counts["金"]}　水:${counts["水"]}</div></div>
+          <div class="report-card"><h3>UG6仮説</h3><div class="report-big">${d.ug.predicted.join("・")}</div><div class="report-list">${d.care.summary}</div></div>
         </div>
-        <div>
-          <label>研究ID</label>
-          <input id="researchId" placeholder="保存時に自動採番" readonly>
+        <div class="report-grid2">
+          <div class="report-card"><h3>施術前</h3><div class="report-big">${before}</div></div>
+          <div class="report-card"><h3>施術後</h3><div class="report-big">${after}</div></div>
         </div>
-        <div>
-          <label>データ品質</label>
-          <div id="qualityStatus" class="quality-status">未チェック</div>
+        <div class="report-grid2">
+          <div class="report-card"><h3>施術メモ</h3><div class="report-list">${d.treatment}</div></div>
+          <div class="report-card"><h3>セルフケア</h3><div class="report-list">${d.home}</div></div>
         </div>
-      </div>
-
-      <div class="grid2">
-        <button class="green" onclick="Records.save()">研究データとして保存</button>
-        <button onclick="Records.checkQuality()">保存チェック</button>
-      </div>
-
-      <details class="record-panel">
-        <summary>研究データ管理</summary>
-        <div class="grid2">
-          <button onclick="Records.exportJSON()">JSON出力</button>
-          <button onclick="Records.exportCSV()">CSV出力</button>
+        <div class="report-card"><h3>次回確認</h3><div class="report-list">${d.next}</div></div>
+        <div class="report-card"><h3>院長メモ</h3><div class="memo-space"></div></div>
+        <div class="report-footer">UG LAB｜答えは身体にある。</div>
+        <div class="print-buttons no-print"><button onclick="Reports.printChart()">カルテ印刷</button></div>
+      </div>`;
+    showOnly("chartReport");
+  }
+  function patient(){
+    const d=data();
+    const before=d.before.length?d.before:d.ug.predicted.slice(0,2);
+    const after=d.after;
+    document.getElementById("patientReport").innerHTML=`
+      <div class="report-a4">
+        <div class="report-head"><div><div class="report-title">からだの変化レポート</div><div class="small">今日の身体の状態と、整ったポイントです。</div></div><div class="report-brand">UG LAB BodyOS</div></div>
+        <div class="report-meta"><div><b>お名前：</b>${d.name}</div><div><b>日付：</b>${d.date}</div><div><b>主訴：</b>${d.complaint||"-"}</div></div>
+        <div class="report-card"><h3>今日の身体</h3><div class="report-big">${BodyOS.patientLabel(before[0])}</div><div class="report-list">身体テストから見た今日の入り口です。</div></div>
+        <div class="report-grid2">
+          <div class="report-card"><h3>今回見つかったこと</h3><div class="report-list">${before.map(c=>"✓ "+BodyOS.found(c)).join("<br>") || "✓ 身体の状態を確認しました"}</div></div>
+          <div class="report-card"><h3>施術で変わったこと</h3><div class="report-list">${after.length?after.map(c=>"✓ "+BodyOS.changed(c)+"が変化しました").join("<br>"):"✓ 呼吸・動き・安定感を確認しました"}</div></div>
         </div>
-        <div id="recordStatus" class="small"></div>
-        <pre id="recordPreview"></pre>
-      </details>
-    </div>
-  </section>
-
-  <section id="chartReport" class="hidden"></section>
-  <section id="patientReport" class="hidden"></section>
-</div>
-
-<script src="data/solarTerms.js"></script>
-<script src="data/ugdb.js"></script>
-<script src="js/calendar.js"></script>
-<script src="js/bodyos.js"></script>
-<script src="js/reports.js"></script>
-<script src="js/records.js"></script>
-<script src="js/app.js"></script>
-</body>
-</html>
+        <div class="report-card"><h3>今日のおうちケア</h3><div class="report-list">${split(d.home).map((x,i)=>(i+1)+". "+x).join("<br>")}</div></div>
+        <div class="report-card"><h3>次回確認すること</h3><div class="report-list">${checks(split(d.next),"□")}</div></div>
+        <div class="report-card"><h3>今日の身体からのひとこと</h3><div class="report-message">${d.care.summary || "身体は毎日少しずつ変わっています。"}</div></div>
+        <div class="report-footer">UG LAB BodyOS｜答えは身体にある。</div>
+        <div class="print-buttons no-print"><button onclick="Reports.printPatient()">患者レポート印刷</button></div>
+      </div>`;
+    showOnly("patientReport");
+  }
+  function showOnly(id){
+    document.getElementById("chartReport").classList.add("hidden");
+    document.getElementById("patientReport").classList.add("hidden");
+    document.getElementById(id).classList.remove("hidden");
+  }
+  return {chart,patient,printChart:()=>printMode("print-chart"),printPatient:()=>printMode("print-patient")};
+})();
