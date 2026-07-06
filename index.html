@@ -52,6 +52,15 @@
   </section>
 
   <section class="panel no-print">
+    <h2>研究モード</h2>
+    <label class="switch-row">
+      <input id="researchMode" type="checkbox" onchange="Records.toggleResearchMode()">
+      <span>研究データとして残す時だけON</span>
+    </label>
+    <p class="small">通常診療ではOFFのままで使えます。保存したい症例だけONにしてください。</p>
+  </section>
+
+  <section class="panel no-print">
     <h2>記録と出力</h2>
     <div class="grid">
       <div><label>施術メモ</label><input id="treatmentMemo" placeholder="UG判定から自動入力されます。必要なら修正"></div>
@@ -60,9 +69,43 @@
     </div>
     <button class="green" onclick="App.autoCare()">UGから自動入力</button>
     <div id="autoCare" class="autocare-box"></div>
-    <div class="grid2">
-      <button onclick="Reports.chart()">カルテ作成</button>
-      <button onclick="Reports.patient()">患者レポート作成</button>
+    <div id="researchOnly" class="research-only hidden">
+      <div class="grid">
+        <div>
+          <label>予後評価</label>
+          <select id="outcome">
+            <option value="">未評価</option>
+            <option value="著明改善">著明改善</option>
+            <option value="改善">改善</option>
+            <option value="やや改善">やや改善</option>
+            <option value="変化なし">変化なし</option>
+            <option value="悪化">悪化</option>
+          </select>
+        </div>
+        <div>
+          <label>研究ID</label>
+          <input id="researchId" placeholder="保存時に自動採番" readonly>
+        </div>
+        <div>
+          <label>データ品質</label>
+          <div id="qualityStatus" class="quality-status">未チェック</div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <button class="green" onclick="Records.save()">研究データとして保存</button>
+        <button onclick="Records.checkQuality()">保存チェック</button>
+      </div>
+
+      <details class="record-panel">
+        <summary>研究データ管理</summary>
+        <div class="grid2">
+          <button onclick="Records.exportJSON()">JSON出力</button>
+          <button onclick="Records.exportCSV()">CSV出力</button>
+        </div>
+        <div id="recordStatus" class="small"></div>
+        <pre id="recordPreview"></pre>
+      </details>
     </div>
   </section>
 
@@ -75,6 +118,7 @@
 <script src="js/calendar.js"></script>
 <script src="js/bodyos.js"></script>
 <script src="js/reports.js"></script>
+<script src="js/records.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
